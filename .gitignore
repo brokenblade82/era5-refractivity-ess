@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv*/
+.env
+.env.*
+*.parquet
+*.joblib
+*.nc
+*.grib
+*.zip
+*.tar.gz
+data/revision2/raw/
+data/revision2/processed/
+*.log

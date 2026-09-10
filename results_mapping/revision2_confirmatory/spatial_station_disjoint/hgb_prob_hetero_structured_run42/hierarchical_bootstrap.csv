@@ -1,0 +1,2 @@
+comparison,method,clusters,mean_difference,ci_lower,ci_upper,replicates,seed
+model_minus_era5_rmse,station_then_month,94,-0.08482769127327035,-0.16636957890716084,-0.007243218739489202,10000,42

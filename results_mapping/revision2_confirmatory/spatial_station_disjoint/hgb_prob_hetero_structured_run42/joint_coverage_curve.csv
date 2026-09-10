@@ -1,0 +1,7 @@
+component,nominal_coverage,empirical_joint_coverage,profiles
+total_profile,0.5,0.5543403724087,56873
+total_profile,0.6,0.6274858016985213,56873
+total_profile,0.7,0.6974311184569127,56873
+total_profile,0.8,0.764545566437501,56873
+total_profile,0.9,0.8367766778611995,56873
+total_profile,0.95,0.8804353559685615,56873

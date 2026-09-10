@@ -1,0 +1,89 @@
+version: 2
+study:
+  dataset_version: sixlevel_min3_temporalcoverage_v1
+  start: "2024-01-01T00:00:00Z"
+  end: "2025-12-31T23:59:59Z"
+  pressure_levels_hpa: [1000, 925, 850, 700, 500, 300]
+  synoptic_hours_utc: [0, 12]
+  min_valid_levels_per_profile: 3
+  station_temporal_coverage:
+    development_2024: 180
+    calibration_2025q1: 45
+    evaluation_2025q2_q4: 135
+  # Retained only for sensitivity reporting. These totals are not used for
+  # formal station eligibility in dataset version sixlevel_min3_temporalcoverage_v1.
+  station_profile_threshold_candidates: [730, 365, 180]
+  min_total_stations: 300
+  min_stations_per_macro_region: 10
+
+paths:
+  root: data/revision2
+  raw: data/revision2/raw
+  interim: data/revision2/interim
+  processed: data/revision2/processed
+  manifests: data/revision2/manifests
+
+igra:
+  base_url: https://www.ncei.noaa.gov/pub/data/igra
+  station_list: igra2-station-list.txt
+  country_list: igra2-country-list.txt
+  data_format: data/igra2-data-format.txt
+  data_directory: data/data-por
+  active_end_year_min: 2024
+  valid_latitude_range: [-90.0, 90.0]
+  valid_longitude_range: [-180.0, 180.0]
+  valid_elevation_m_range: [-500.0, 9000.0]
+  workers: 4
+  timeout_seconds: 120
+  retries: 5
+  # NOAA has already applied gross-error QC. The parser preserves PFLAG/ZFLAG/TFLAG
+  # and treats documented missing sentinels as missing; no undocumented flag is
+  # silently discarded.
+  reject_variable_flags: []
+
+era5:
+  # Resolved relative to the Remote Sensing project root. A CLI --era5-root
+  # value still takes precedence when the archive is moved.
+  root: ../0.25ERA5/data/raw/global_0p5
+  expected_grid_degrees: 0.5
+  expected_hours_utc: [0, 6, 12, 18]
+  required_pressure_variables:
+    temperature: t
+    specific_humidity: q
+    geopotential: z
+  required_single_variables: [sp]
+  required_static_variables: [lsm, z]
+  pressure_file_glob: "{year}/{month}/pressure_levels/*{variable}*{yyyymm}.nc"
+  single_file_glob: "{year}/{month}/single_levels/*{yyyymm}.nc"
+
+rapsodi:
+  level2_cid: bafybeid7cnw62zmzfgxcvc6q6fa267a7ivk2wcchbmkoyk4kdi5z2yj2w4
+  gateway_uri: https://ipfs.orcestra-campaign.org
+  local_store: data/revision2/raw/rapsodi/rapsodi_level2.zarr
+
+cosmic2:
+  stream: nrt
+  product: atmPrf
+  # One deterministic day per month limits the raw transfer to roughly 48 GB
+  # while retaining two full seasonal cycles. This is external evaluation only.
+  day_of_month: 15
+  base_url: https://data.cosmic.ucar.edu/gnss-ro/cosmic2
+  delete_archive_after_parse: false
+  timeout_seconds: 300
+  retries: 5
+
+splits:
+  seed: 42
+  fractions:
+    train: 0.65
+    early_val: 0.10
+    calibration: 0.10
+    test: 0.15
+  latitude_bands:
+    northern_extratropics: [30.0, 90.0]
+    tropics: [-30.0, 30.0]
+    southern_extratropics: [-90.0, -30.0]
+  minimum_southern_extratropical_stations:
+    early_val: 3
+    calibration: 3
+    test: 5

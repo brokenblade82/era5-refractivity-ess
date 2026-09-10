@@ -1,0 +1,8 @@
+{
+  "version": "2026-09-10-frozen-diagnostics-v1",
+  "bootstrap_replicates": 10000,
+  "seed": 42,
+  "qc_rule": "Sensitivity subset requires pressure_flag and temperature_flag in A/B; blanks are not bad data. No height-flag or humidity truth claim. Also report dewpoint_depression versus relative_humidity pathways separately.",
+  "scale_bins": "Per-pressure calibration-set quintiles; test endpoints extend to infinity; ties may leave empty bins",
+  "excluded": ["Hugging Face", "new training", "release-time recollocation", "extra middle-upper pressure levels", "external recalibration"]
+}

@@ -1,0 +1,2 @@
+model,protocol,seed,parameter_count,total_seconds,training_and_setup_seconds,inference_seconds,evaluated_level_rows,evaluated_level_rows_per_second,peak_gpu_memory_mb
+hgb_prob_hetero_structured,temporal_holdout,42,0,76.53664180000487,66.97753640000883,9.559105399996042,933475,97652.96656320857,0.0

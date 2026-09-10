@@ -1,0 +1,63 @@
+version: 1
+title: Physical Sources and Generalization Limits of Statistical Correction for ERA5 Atmospheric Refractivity
+journal: Earth and Space Science
+manuscript_type: Research Article
+
+frozen_statistics:
+  ess: paper_outputs/revision2_ess/statistics
+  publication_final: paper_outputs/revision2_publication_final/statistics
+  confirmatory_tables: paper_outputs/revision2_publication_final/tables
+  transfer_bootstrap: results_mapping/revision2_ess/diagnostics/transfer_mechanism_bootstrap.csv
+  spatial_blocks: results_mapping/revision2_confirmatory/spatial_leave_block_out/summary/spatial_block_runs.csv
+
+observations:
+  station_split: data/revision2/manifests/station_split.csv
+  rapsodi_predictions: paper_outputs/revision2_confirmatory/external/rapsodi/predictions.parquet
+  cosmic_profiles: data/revision2/processed/cosmic2_atmprf_height_profiles.parquet
+
+outputs:
+  working_root: paper_outputs/revision2_ess_manuscript
+  documentation_root: docs/revision2_ess
+  submission_root: 论文/ESS_ERA5_Refractivity_Submission
+
+frozen_counts:
+  igra_stations: 630
+  igra_profiles: 767337
+  igra_level_rows: 4604022
+  rapsodi_profiles: 237
+  rapsodi_level_rows: 1299
+  cosmic_profiles: 120908
+  cosmic_height_rows: 2044878
+  cosmic_archive_months: 24
+
+required_ess_values:
+  coverage_90:
+    igra: 0.891585
+    rapsodi: 0.781370
+    cosmic2: 0.665051
+  external_rmse_difference:
+    rapsodi: -1.129963
+    cosmic2: 0.311229
+
+open_research:
+  github: https://github.com/OWNER/REPOSITORY
+  zenodo_doi: 10.5281/zenodo.TBD
+
+validation:
+  maximum_publication_units: 25
+  abstract_word_limit: 250
+  plain_language_word_limit: 200
+  key_point_character_limit: 140
+  forbidden_terms:
+    - HGB-CRN
+    - HGB-SRNP
+    - attention
+    - global corrected product
+    - independent truth
+    - well calibrated
+  forbidden_old_values:
+    - "89.6%"
+    - "78.3%"
+    - "67.3%"
+    - "-1.217"
+    - "+0.314"

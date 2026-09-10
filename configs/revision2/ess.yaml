@@ -1,0 +1,101 @@
+version: 1
+experiment_family: revision2_ess_final_evidence
+working_title: Physical Sources and Generalization Limits of Statistical Correction for ERA5 Atmospheric Refractivity
+
+frozen_boundaries:
+  allow_training: false
+  allow_model_selection_from_external_data: false
+  allow_external_recalibration: false
+  allow_global_product: false
+  external_data_are_assimilation_independent_truth: false
+
+data_config: configs/revision2/data_pipeline.yaml
+confirmatory_config: configs/revision2/confirmatory.yaml
+publication_config: configs/revision2/publication.yaml
+input: data/revision2/processed/era5_igra_profiles
+station_split: data/revision2/manifests/station_split.csv
+protocol_license_matrix: data/revision2/manifests/protocol_license_matrix.csv
+
+frozen_runs:
+  seasonal_mean:
+    path: results_mapping/revision2_confirmatory/space_time_holdout/seasonal_mean_run42
+    frozen_prediction_sha256: 54159a10e053f8acad1f557e6364e963d91fdfc7297ab0c3202c8c12710f30cb
+  ridge:
+    path: results_mapping/revision2_confirmatory/space_time_holdout/ridge_run42
+    model_sha256: 18bf42806f3a11c793f02072e09de31c5addcd018a9e60b9ea5955d1ae883c84
+  hgb:
+    path: results_mapping/revision2_confirmatory/space_time_holdout/hgb_run42
+    model_sha256: 6a458b1c654663707c9011a7a049d8d83b600b0e41ac99fc27cecbbf7dff7066
+  hgb_probability:
+    path: results_mapping/revision2_confirmatory/space_time_holdout/hgb_prob_hetero_structured_run42
+    model_sha256: 861327cf374f44681b314b25119695a25a526b560967303aabb2ced043ce3832
+
+frozen_inputs:
+  collocation_manifest:
+    path: data/revision2/manifests/era5_igra_profile_manifest.json
+    sha256: a3f47a7491dced0f96b1888af0ae07cc11de937f9c6fe408363a3c66fc8426a3
+  station_split:
+    path: data/revision2/manifests/station_split.csv
+    sha256: 3e33ac301d87fb9e978cf87ecee14bbf320c52509271b6bc722114dc74732664
+  protocol_license_matrix:
+    path: data/revision2/manifests/protocol_license_matrix.csv
+    sha256: c1fcc1446824b917bdb4f85f86a68f39c27bddaf2052945519b598808d80677e
+  rapsodi:
+    path: data/revision2/processed/rapsodi_era5_profiles.parquet
+    sha256: 623b1c7a9cb59bfe421ca03cb6a88f2c18f6e8d0bc483da06cbf4409dcf2c2e4
+    collocation_manifest: data/revision2/manifests/rapsodi_era5_collocation_manifest.json
+    collocation_manifest_sha256: c42d7c35290cd9c078a1622173de5da2b607359639802d4d269be817017c30e1
+    platform_audit: docs/revision2_confirmatory/rapsodi_platform_audit_template.csv
+  cosmic2_height:
+    path: data/revision2/processed/cosmic2_atmprf_height_profiles.parquet
+    sha256: 6d6a5799d38ac38fc354b7521b0e45a027d96158a50ca1c4e181b3ef74bd5e69
+    preparation_manifest: data/revision2/manifests/cosmic2_height_prepare_manifest.json
+    preparation_manifest_sha256: 565a4cc3d259c3e5a647690d0ae5ce6e25b748f6d3614849ae2a481c67404843
+
+cosmic2_height:
+  input_root: data/revision2/raw/cosmic2/nrt/atmPrf
+  prepared_profiles: data/revision2/processed/cosmic2_atmprf_height_profiles.parquet
+  preparation_manifest: data/revision2/manifests/cosmic2_height_prepare_manifest.json
+  height_levels_km: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0]
+  era5_pressure_levels_hpa: [1000, 975, 950, 925, 900, 875, 850, 825, 800, 775, 750, 700, 500, 300, 200, 100]
+  correction_pressure_levels_hpa: [1000, 925, 850, 700, 500, 300]
+  height_bands_km:
+    low: [0.5, 2.0]
+    middle: [2.0, 5.0]
+    upper: [5.0, 9.0]
+  baseline_interpolation: log_linear_total_with_interpolated_wet_fraction
+  correction_interpolation: linear_in_geometric_height_no_extrapolation
+  output_schema_version: 2
+
+sampling_gate:
+  expansion_days_of_month: [5, 15, 25]
+  expected_one_day_archives: 24
+  expected_expanded_archives: 72
+  leave_one_archive_absolute_threshold_n_units: 0.10
+  leave_one_archive_relative_threshold: 0.25
+  maximum_archive_row_fraction: 0.10
+  maximum_year_difference_n_units: 0.20
+  primary_height_bands: [low, middle, upper]
+
+statistics:
+  bootstrap_replicates: 10000
+  seed: 42
+  confidence_levels: [0.50, 0.60, 0.70, 0.80, 0.90, 0.95]
+  pit_bins: 20
+  decomposition_tolerance: 1.0e-10
+  seasonal_reproduction_tolerance: 1.0e-10
+
+outputs:
+  root: results_mapping/revision2_ess
+  external_root: results_mapping/revision2_ess/external
+  diagnostics_root: results_mapping/revision2_ess/diagnostics
+  paper_root: paper_outputs/revision2_ess
+  documentation_root: docs/revision2_ess
+  release_root: release/ess_reproducibility_v1
+
+release:
+  code_license: MIT
+  derived_data_license: CC-BY-4.0
+  raw_data_redistribution: false
+  repository_placeholder: https://github.com/OWNER/REPOSITORY
+  doi_placeholder: 10.5281/zenodo.TBD

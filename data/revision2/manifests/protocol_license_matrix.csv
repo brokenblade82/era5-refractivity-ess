@@ -1,0 +1,19 @@
+protocol,phase,station_license,time_start_utc,time_end_utc_exclusive,note
+spatial_station_disjoint,train,train,2024-01-01,2025-01-01,model fitting
+spatial_station_disjoint,early_stopping,early_val,2024-01-01,2025-01-01,neural early stopping only
+spatial_station_disjoint,calibration,calibration,2024-01-01,2025-01-01,post-hoc predictive-scale calibration
+spatial_station_disjoint,evaluation,test,2024-01-01,2025-01-01,final station-disjoint evaluation
+temporal_holdout,train,train,2024-01-01,2025-01-01,model fitting
+temporal_holdout,early_stopping,early_val,2024-01-01,2025-01-01,neural early stopping only
+temporal_holdout,calibration,train,2025-01-01,2025-04-01,future-time predictive-scale calibration
+temporal_holdout,evaluation,train,2025-04-01,2026-01-01,future-time evaluation
+space_time_holdout,train,train,2024-01-01,2025-01-01,model fitting
+space_time_holdout,early_stopping,early_val,2024-01-01,2025-01-01,neural early stopping only
+space_time_holdout,calibration,calibration,2025-01-01,2025-04-01,future station-disjoint calibration
+space_time_holdout,evaluation,test,2025-04-01,2026-01-01,future station-disjoint evaluation
+spatial_leave_block_out,train,block_out,2024-01-01,2025-01-01,block-specific model fitting
+spatial_leave_block_out,early_stopping,block_out_early_val,2024-01-01,2025-01-01,block-out early stopping
+spatial_leave_block_out,calibration_concurrent,block_out_calibration,2024-01-01,2025-01-01,block-out concurrent-period calibration
+spatial_leave_block_out,calibration_future,block_out_calibration,2025-01-01,2025-04-01,block-out future-period calibration
+spatial_leave_block_out,evaluation_concurrent,block_in,2024-01-01,2025-01-01,held-out block concurrent evaluation
+spatial_leave_block_out,evaluation_future,block_in,2025-04-01,2026-01-01,held-out block future evaluation

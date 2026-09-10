@@ -1,0 +1,78 @@
+version: 1
+experiment_family: revision2_confirmatory_probability_and_validation
+interpretation:
+  development_protocol: spatial_station_disjoint
+  primary_confirmatory_protocol: space_time_holdout
+  point_model: hgb
+  neural_models_are_comparators_only: true
+
+data_config: configs/revision2/data_pipeline.yaml
+input: data/revision2/processed/era5_igra_profiles
+station_split: data/revision2/manifests/station_split.csv
+protocol_license_matrix: data/revision2/manifests/protocol_license_matrix.csv
+development_results: results_mapping/revision2_baselines/spatial_station_disjoint
+output_root: results_mapping/revision2_confirmatory
+paper_output_root: paper_outputs/revision2_confirmatory
+documentation_root: docs/revision2_confirmatory
+
+models:
+  ridge:
+    alpha: 1.0
+    solver: lsqr
+  hgb:
+    learning_rate: 0.05
+    max_iter: 300
+    max_leaf_nodes: 31
+    min_samples_leaf: 30
+    l2_regularization: 0.1
+    random_state: 42
+  probabilistic_hgb:
+    crossfit_folds: 5
+    log_scale_min: -5.0
+    log_scale_max: 4.0
+    scale_floor: 0.05
+    calibration_coverage: 0.90
+    minimum_pair_count: 30
+  neural:
+    hidden_width: 128
+    hidden_layers: 2
+    dropout: 0.1
+    batch_size: 256
+    learning_rate: 0.0003
+    weight_decay: 0.0001
+    max_epochs: 80
+    patience: 12
+    gradient_clip: 1.0
+    mixed_precision: true
+    num_workers: 0
+    rbf_anchors: 64
+    rbf_scale_km: 1500.0
+
+evaluation:
+  confidence_levels: [0.50, 0.60, 0.70, 0.80, 0.90, 0.95]
+  bootstrap_replicates: 10000
+  energy_score_draws: 64
+  seeds: [11, 23, 42, 71, 101]
+  primary_probability_variant: hgb_prob_hetero_structured
+  probability_reference_variant: hgb_prob_global
+  selection_rule:
+    minimum_winning_runs: 4
+    marginal_coverage_90_min: 0.87
+    marginal_coverage_90_max: 0.93
+    point_degradation_fraction_limit: 0.01
+
+spatial_blocks:
+  target_blocks: 20
+  minimum_stations: 5
+  require_southern_blocks: 2
+  periods: [concurrent, future]
+
+external:
+  cosmic2_interpretation: cross-platform validation; not assimilation-independent truth
+  cosmic2_day_of_month: 15
+  external_degradation_fraction_limit: 0.01
+
+application:
+  minimum_common_levels: 3
+  pressure_coordinate: log_pressure
+  height_uncertainty_included: false

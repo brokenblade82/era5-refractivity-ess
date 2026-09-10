@@ -1,0 +1,35 @@
+version: ess_repair_v1
+ess_config: configs/revision2/ess.yaml
+confirmatory_config: configs/revision2/confirmatory.yaml
+data_config: configs/revision2/data_pipeline.yaml
+boundaries:
+  train_hgb: false
+  train_neural_models: false
+  external_recalibration: false
+  download_observations: false
+  generate_global_products: false
+  refit_ridge_only: true
+ridge:
+  alpha: 1.0
+  solver: lsqr
+  near_constant_relative_threshold: 1.0e-12
+  feature_hour_definition: integer_hour_unchanged
+height:
+  radius_m: 6371000.0
+  g0: 9.80665
+  variants: [A, B, C]
+  primary_variant: B
+  chunk_profiles: 200
+statistics:
+  replicates: 10000
+  seed: 42
+  minimum_clusters: 10
+  closure_tolerance: 1.0e-10
+  legacy_reproduction_tolerance: 1.0e-6
+matching:
+  radius_km: 1000.0
+  synoptic_tolerance_hours: 1.0
+outputs:
+  results: results_mapping/revision2_ess_repair
+  paper: paper_outputs/revision2_ess_repair
+  docs: docs/revision2_ess_repair

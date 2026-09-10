@@ -1,0 +1,7 @@
+pressure_hpa,humidity_source,n
+300,dewpoint_depression,41865
+500,dewpoint_depression,42591
+700,dewpoint_depression,42894
+850,dewpoint_depression,40413
+925,dewpoint_depression,32894
+1000,dewpoint_depression,13594

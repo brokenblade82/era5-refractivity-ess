@@ -1,0 +1,47 @@
+version: 1
+experiment_family: revision2_strong_baselines
+data_config: configs/revision2/data_pipeline.yaml
+input: data/revision2/processed/era5_igra_profiles
+station_split: data/revision2/manifests/station_split.csv
+protocol_license_matrix: data/revision2/manifests/protocol_license_matrix.csv
+output_root: results_mapping/revision2_baselines
+
+models:
+  ridge:
+    alpha: 1.0
+    solver: lsqr
+  hgb:
+    learning_rate: 0.05
+    max_iter: 300
+    max_leaf_nodes: 31
+    min_samples_leaf: 30
+    l2_regularization: 0.1
+  probabilistic_hgb:
+    crossfit_folds: 5
+    log_scale_min: -5.0
+    log_scale_max: 4.0
+    scale_floor: 0.05
+  neural:
+    hidden_width: 128
+    hidden_layers: 2
+    dropout: 0.1
+    batch_size: 256
+    learning_rate: 0.0003
+    weight_decay: 0.0001
+    max_epochs: 80
+    patience: 12
+    gradient_clip: 1.0
+    mixed_precision: true
+    num_workers: 0
+    rbf_anchors: 64
+    rbf_scale_km: 1500.0
+
+evaluation:
+  confidence_levels: [0.50, 0.60, 0.70, 0.80, 0.90, 0.95]
+  bootstrap_replicates: 2000
+  energy_score_draws: 64
+  seeds: [11, 23, 42, 71, 101]
+  selection_rule:
+    primary_probability_metric: crps
+    minimum_winning_runs: 4
+    rmse_noninferiority_margin_n_units: 0.02

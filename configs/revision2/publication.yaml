@@ -1,0 +1,49 @@
+version: 1
+experiment_family: revision2_publication_physics_and_transfer
+data_config: configs/revision2/data_pipeline.yaml
+confirmatory_config: configs/revision2/confirmatory.yaml
+
+frozen_model_run: results_mapping/revision2_confirmatory/spatial_station_disjoint/hgb_prob_hetero_structured_run42
+confirmatory_root: results_mapping/revision2_confirmatory
+confirmatory_paper_root: paper_outputs/revision2_confirmatory
+output_root: results_mapping/revision2_publication
+paper_output_root: paper_outputs/revision2_publication
+documentation_root: docs/revision2_publication
+final_output_root: paper_outputs/revision2_publication_final
+final_documentation_root: docs/revision2_publication_final
+
+cosmic2_height:
+  input_root: data/revision2/raw/cosmic2/nrt/atmPrf
+  prepared_profiles: data/revision2/processed/cosmic2_atmprf_height_profiles.parquet
+  preparation_manifest: data/revision2/manifests/cosmic2_height_prepare_manifest.json
+  height_levels_km: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0]
+  era5_pressure_levels_hpa: [1000, 975, 950, 925, 900, 875, 850, 825, 800, 775, 750, 700, 500, 300, 200, 100]
+  correction_pressure_levels_hpa: [1000, 925, 850, 700, 500, 300]
+  minimum_valid_heights: 3
+  official_qc_rule: bad_equals_zero
+  refractivity_interpolation: log_linear_in_geometric_height
+  correction_interpolation: linear_in_geometric_height_no_extrapolation
+  bootstrap_replicates: 10000
+  confidence_levels: [0.50, 0.60, 0.70, 0.80, 0.90, 0.95]
+  height_bands_km:
+    low: [0.5, 2.0]
+    middle: [2.0, 5.0]
+    upper: [5.0, 9.0]
+
+external_statistics:
+  rapsodi_predictions: paper_outputs/revision2_confirmatory/external/rapsodi/predictions.parquet
+  cosmic2_dry_pressure_root: paper_outputs/revision2_confirmatory/external/cosmic2
+  bootstrap_replicates: 10000
+  seed: 42
+
+physics:
+  protocol: space_time_holdout
+  model_run: results_mapping/revision2_confirmatory/space_time_holdout/hgb_run42
+  bootstrap_replicates: 10000
+  seed: 42
+
+interpretation:
+  cosmic2_primary: geometric-height cross-platform comparison; not assimilation-independent truth
+  cosmic2_dry_pressure: dry-pressure-coordinate sensitivity result
+  rbf_mlp: exploratory comparator; not selected after confirmatory evaluation
+  global_product_allowed: false

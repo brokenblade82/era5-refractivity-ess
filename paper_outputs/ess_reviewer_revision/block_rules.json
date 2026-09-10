@@ -1,0 +1,10 @@
+{
+  "grid": "30 degree latitude by 60 degree longitude, longitude modulo 360",
+  "minimum_stations": 5,
+  "target": 20,
+  "southern_reservation": 2,
+  "selected": 579,
+  "below_minimum": 21,
+  "other_omitted": 30,
+  "early_validation": "outside block intersect original early_val; HGB itself uses automatic row-level early stopping in its permitted training rows"
+}

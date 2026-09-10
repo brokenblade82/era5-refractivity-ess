@@ -1,0 +1,16 @@
+version: ess_final_review_v1
+ess_config: configs/revision2/ess.yaml
+data_config: configs/revision2/data_pipeline.yaml
+raw_store: data/revision2/raw/rapsodi/rapsodi_level2.zarr
+legacy_predictions: results_mapping/revision2_ess_repair/evaluation/rapsodi/predictions.parquet
+repair_freeze: results_mapping/revision2_ess_repair/freeze_manifest.json
+ridge_model: results_mapping/revision2_ess_repair/ridge/model.joblib
+training_context: results_mapping/revision2_ess_repair/ridge/training_context.joblib
+output: results_mapping/revision2_ess_review
+expected_profiles: {ascending: 153, descending: 84}
+chunk_rows: 200
+bootstrap_replicates: 10000
+seed: 42
+minimum_clusters: 10
+reproduction_tolerance: 1.0e-6
+primary: ascending_trajectory

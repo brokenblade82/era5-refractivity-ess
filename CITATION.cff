@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite this software and the original data sources when using these materials."
+title: "ERA5 refractivity: thermodynamic budgets and domain dependence"
+type: software
+authors:
+  - family-names: Wang
+    given-names: Yuxuan
+version: 0.1.0
+license: MIT
+abstract: "Research code and compact evidence accompanying a manuscript in preparation; full frozen-output reproduction requires separate archived inputs."

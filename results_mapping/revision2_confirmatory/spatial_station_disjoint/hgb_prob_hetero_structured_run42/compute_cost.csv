@@ -1,0 +1,2 @@
+model,protocol,seed,parameter_count,total_seconds,training_and_setup_seconds,inference_seconds,evaluated_level_rows,evaluated_level_rows_per_second,peak_gpu_memory_mb
+hgb_prob_hetero_structured,spatial_station_disjoint,42,0,70.38242120000359,67.21878750000906,3.1636336999945343,283749,89690.85137779707,0.0
