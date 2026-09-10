@@ -51,7 +51,7 @@ def main() -> None:
         output = root / f"{model}_run{seed}"
         if is_complete(output, model, period):
             tqdm.write(f"[SKIP] {period} {block} {model} run={seed}")
-      continue
+            continue
         command = [
             sys.executable, str(Path(__file__).with_name("run_revision2_baselines.py")),
             "--config", args.config, "--model", model, "--protocol", "spatial_leave_block_out",

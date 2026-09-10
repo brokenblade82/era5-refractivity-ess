@@ -332,7 +332,7 @@ def fit_profile_network(
     extra_early: np.ndarray | None = None,
     max_epochs_override: int | None = None,
     resume: bool = False,
-) -> tuple[ProfileGaussianMLP, dict[str, Any],pd.DataFrame]:
+) -> tuple[ProfileGaussianMLP, dict[str, Any], pd.DataFrame]:
     torch.manual_seed(seed)
     np.random.seed(seed)
     feature_dim = train.features.shape[-1]

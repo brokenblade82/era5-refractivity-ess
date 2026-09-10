@@ -262,6 +262,6 @@ def _metric_row(group: pd.DataFrame, model: str, split: str, group_type: str, gr
         "n": len(group),
         "rmse": float(np.sqrt(mean_squared_error(true, pred))),
         "mae": float(mean_absolute_error(true, pred)),
-   "bias": float(np.mean(pred - true)),
+        "bias": float(np.mean(pred - true)),
         "r2": float(r2_score(true, pred)) if len(group) > 1 else np.nan,
     }

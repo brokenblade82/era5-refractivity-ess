@@ -382,7 +382,7 @@ def cluster_bootstrap_decomposition(
     rng = np.random.default_rng(seed)
     sampled = np.empty(int(replicates), dtype=float)
     for index in range(int(replicates)):
-       selected = values[rng.integers(0, len(values), size=len(values))].sum(axis=0)
+        selected = values[rng.integers(0, len(values), size=len(values))].sum(axis=0)
         n, r2, m2, _, _ = selected
         sampled[index] = math.sqrt(m2 / n) - math.sqrt(r2 / n)
     point = correction_decomposition(work[residual_column], work[correction_column])

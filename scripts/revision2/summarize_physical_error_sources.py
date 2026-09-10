@@ -68,7 +68,7 @@ def station_support(stations: pd.DataFrame) -> pd.DataFrame:
     lon = np.deg2rad(stations["longitude"].to_numpy(float))
     xyz = np.column_stack([np.cos(lat) * np.cos(lon), np.cos(lat) * np.sin(lon), np.sin(lat)])
     distance, _ = cKDTree(xyz).query(xyz, k=2)
-    chord= np.clip(distance[:, 1], 0, 2)
+    chord = np.clip(distance[:, 1], 0, 2)
     stations = stations.copy()
     stations["nearest_station_distance_km"] = 6371.0088 * 2 * np.arcsin(chord / 2)
     return stations

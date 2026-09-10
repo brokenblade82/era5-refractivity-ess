@@ -838,7 +838,7 @@ class RepairPipeline:
                         keep = part[cluster].astype(str).to_numpy() != key
                         if not keep.any():
                             continue
-                       drop = probability_shape(error[keep], sd[keep])
+                        drop = probability_shape(error[keep], sd[keep])
                         influences.append({**prefix, "left_out_cluster": key,
                             **{k: drop.get(k, np.nan) for k in ("z_mean", "z_std", "coverage_90", "diagnostic_scale_90", "u_excess_kurtosis", "u_tail_gt3")}})
         self.csv("probability_shape_diagnostics.csv", pd.DataFrame(summaries))

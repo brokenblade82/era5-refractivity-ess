@@ -293,7 +293,7 @@ class FinalReview:
                 frame['latitude'] = frame.observation_latitude
                 frame['longitude'] = frame.observation_longitude
             good = frame.time.notna() & frame.latitude.between(-90, 90) & np.isfinite(frame.longitude)
-      if variant == 'trajectory':
+            if variant == 'trajectory':
                 good &= frame.trajectory_valid.astype(bool)
             frame['time'] = pd.to_datetime(frame.time, utc=True).dt.tz_localize(None)
             months = frame.loc[good, 'time'].dt.strftime('%Y%m')

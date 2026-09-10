@@ -14,7 +14,7 @@ def load_yaml(path: str | Path) -> dict:
 
 
 def read_optional_csv(path: str | Path) -> pd.DataFrame:
- """Read an optional table; deterministic baselines intentionally emit an empty CSV."""
+    """Read an optional table; deterministic baselines intentionally emit an empty CSV."""
     path = Path(path)
     if not path.is_file() or not path.read_text(encoding="utf-8-sig").strip():
         return pd.DataFrame()

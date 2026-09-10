@@ -158,7 +158,7 @@ def main() -> None:
         summary_rows.append({
             "quantity": prefix, **{f"era5_{key}": value for key, value in era5.items()},
             **{f"model_{key}": value for key, value in model.items()},
-       "model_minus_era5_rmse": model["rmse"] - era5["rmse"],
+            "model_minus_era5_rmse": model["rmse"] - era5["rmse"],
             "marginal_coverage_90": float(np.mean(np.abs(error) <= norm.ppf(0.95) * std)),
         })
         bootstrap_rows.append(station_bootstrap(

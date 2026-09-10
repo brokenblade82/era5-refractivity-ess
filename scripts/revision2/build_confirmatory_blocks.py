@@ -53,7 +53,7 @@ def main() -> None:
     selected.to_csv(output, index=False)
     write_json(output.with_suffix(".json"), {
         "station_split": str(split_path.resolve()), "station_split_sha256": sha256_file(split_path),
-        "target_blocks": target, "minimum_stations":int(settings["minimum_stations"]),
+        "target_blocks": target, "minimum_stations": int(settings["minimum_stations"]),
         "require_southern_blocks": southern_required, "blocks": selected["block"].tolist(),
         "selection_uses_model_performance": False, "output": str(output.resolve()),
     })

@@ -309,7 +309,7 @@ def train_module(module: nn.Module, data: MultiSiteData, common: dict[str, Any],
         train_loss = float(np.mean(losses))
         rows.append({"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss})
         if val_loss < best_val:
-         best_val = val_loss
+            best_val = val_loss
             best_state = {k: v.detach().cpu().clone() for k, v in module.state_dict().items()}
             wait = 0
         else:
